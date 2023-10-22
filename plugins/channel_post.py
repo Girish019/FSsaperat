@@ -111,7 +111,7 @@ async def conv_link(client , message):
     base64_string = await encode(string)
     link = f"https://telegram.me/{client.username}?start={base64_string}"
     await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
-    return 
+    return link
 
 async def get_short(SL_URL, SL_API, Tlink): #A simple func for shorting link
     # FireLinks shorten
