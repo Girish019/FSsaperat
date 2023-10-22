@@ -61,7 +61,7 @@ async def channel_post(client: Client, message: Message):
     else:
          reply_text = await message.reply_text("❌Don't send me messages directly I'm only for serials!")
         
-    Tlink = await conv_link(message)
+    Tlink = await conv_link(client , message)
     await client.send_message(chat_id=chtid, text=f"link:-\n{Tlink}")
     Slink = await get_short(SL_URL, SL_API, Tlink) #generating short link with particular domine and api
     await bot_msg.edit("Analysing....!")
@@ -80,7 +80,7 @@ async def channel_post(client: Client, message: Message):
     await bot_msg.edit(BOTEFITMSG.format(filname, botfsno[0], Tlink, Slink, Size, DATEDAY[-1])) #msg edit to "please wait...(see line 39" msg ==> and finally the elements belongs to sent serials are updated here
     #await e_pic.edit) # msg edit in forwarder channel = "pic without captions (see line 41)" ==> thats return to our given format and short link ,date are updated here
 
-async def conv_link(message , client: Client):
+async def conv_link(client , message):
     try:
        post_message = await message.copy(chat_id = CHANNEL_ID, disable_notification=True)
     except FloodWait as e:
