@@ -36,7 +36,7 @@ async def channel_post(client: Client, message: Message):
         pass                
     if int(DATEDAY[-1][0:2]) % 2 != 0:#chaeking for ODD by given date
         if filname in media.file_name: #matching name in dict key with arrival video file name
-            info = await get_info(message)
+            info = await get_info(filname, message)
         elif media.file_name == media.file_name:
             link = await conv_link(client , message)
             await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
@@ -47,7 +47,7 @@ async def channel_post(client: Client, message: Message):
             
     elif int(DATEDAY[-1][0:2]) % 2 == 0: #checking for EVEN
         if filname in media.file_name:
-            info = await get_info(message)
+            info = await get_info(filname, message)
         elif media.file_name == media.file_name:
             link = await conv_link(client , message)
             await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
@@ -77,7 +77,7 @@ async def channel_post(client: Client, message: Message):
     await asyncio.sleep(1)
     await bot_msg.edit(BOTEFITMSG.format(filname, botfsno[0], Tlink, Slink, Size, DATEDAY[-1])) #msg edit to "please wait...(see line 39" msg ==> and finally the elements belongs to sent serials are updated here
     #await e_pic.edit) # msg edit in forwarder channel = "pic without captions (see line 41)" ==> thats return to our given format and short link ,date are updated here
-async def get_info(message):
+async def get_info(filname, message):
     # chtid=int(DATAODD[filname][3])#for particular channel id
     pic=DATAODD[filname][0] #particuler images
     SL_URL=DATAODD[filname][1] #for particuler domine name
