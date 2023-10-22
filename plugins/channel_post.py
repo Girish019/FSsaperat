@@ -42,9 +42,11 @@ async def channel_post(client: Client, message: Message):
             SL_API=DATAODD[filname][2] #for particuler api 
             chtid=message.chat.id # if you want pic+formet into bot pm     
             bot_msg = await message.reply_text("Please Wait...!", quote = True) #reply text please wait... to bot
-            await asyncio.sleep(1)      
+            await asyncio.sleep(1)       
         else:
-            await message.reply_text("❌Don't send me messages directly I'm only for serials!")
+            link = await conv_link(client , message)
+            await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
+            await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
             
     elif int(DATEDAY[-1][0:2]) % 2 == 0: #checking for EVEN
         if filname in media.file_name:
@@ -56,8 +58,9 @@ async def channel_post(client: Client, message: Message):
             bot_msg = await message.reply_text("Please Wait...!", quote = True) #reply text please wait... to bot
             await asyncio.sleep(1)
         else:
-            await message.reply_text("❌Don't send me messages directly I'm only for serials!")
-        
+            link = await conv_link(client , message)
+            await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
+            await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
     else:
          reply_text = await message.reply_text("❌Don't send me messages directly I'm only for serials!")
         
