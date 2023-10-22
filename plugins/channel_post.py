@@ -96,8 +96,7 @@ async def get_info(filname, message):
     return pic, SL_URL, SL_API, chtid, bot_msg
 
 @Client.on_message(filters.private & filters.user(ADMINS) & filters.command(["genlink"]))
-Client=client 
-Message=message
+Client,Message=client,message
 async def conv_link(client , message):
     try:
        post_message = await message.copy(chat_id = CHANNEL_ID, disable_notification=True)
