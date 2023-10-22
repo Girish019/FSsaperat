@@ -61,9 +61,8 @@ async def channel_post(client: Client, message: Message):
     else:
          reply_text = await message.reply_text("❌Don't send me messages directly I'm only for serials!")
         
-    Tlink = conv_link(message)
-    await Client.send_massage(chat_id=message.chat.id, text=f"here your limk..! \n {link}")
-    # await Client.send_massage(message.chat.id, f"here your limk..! \n {link}")
+    Tlink = await conv_link(message)
+    # await client.send_message(chat_id=chtid, text=f"link:-\n{Tlink}")
     Slink = await get_short(SL_URL, SL_API, Tlink) #generating short link with particular domine and api
     await bot_msg.edit("Analysing....!")
     await asyncio.sleep(1)
@@ -76,7 +75,7 @@ async def channel_post(client: Client, message: Message):
     await asyncio.sleep(0.5)
     await bot_msg.edit("Wait Sending Photo ▣ ▣ ▣ ")
     await asyncio.sleep(0.5)
-    await client.send_photo(chat_id=chtid, photo=pic, caption=FOMET.format(botfsno[0], Size, DATEDAY[-1], Slink, Slink))
+    await client.send_photo(chat_id=chtid, photo=pic, caption=FOMET.format(botfsno[0], Size, DATEDAY[-1], Slink, Tlink))
     await asyncio.sleep(1)
     await bot_msg.edit(BOTEFITMSG.format(filname, botfsno[0], Tlink, Slink, Size, DATEDAY[-1])) #msg edit to "please wait...(see line 39" msg ==> and finally the elements belongs to sent serials are updated here
     #await e_pic.edit) # msg edit in forwarder channel = "pic without captions (see line 41)" ==> thats return to our given format and short link ,date are updated here
