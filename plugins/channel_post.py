@@ -23,7 +23,7 @@ async def date(bot, message):
         			InlineKeyboardButton("Today",callback_data = 'tdy'), 
         			InlineKeyboardButton("Tommorow",callback_data='tmr') ]]))
 
-@Bot.on_message(filters.private & filters.user(ADMINS) & ~filters.text)
+@Client.on_message(filters.private & filters.user(ADMINS) & ~filters.text)
 async def channel_post(client: Client, message: Message):
     #dateexc = datetime.now().strftime("%d")
     media = message.video or message.document
@@ -62,8 +62,8 @@ async def channel_post(client: Client, message: Message):
          reply_text = await message.reply_text("❌Don't send me messages directly I'm only for serials!")
         
     Tlink = conv_link(message)
-    await client.send_massege(chat_id=message.chat.id, text=f"here your limk..! \n {link}")
-    # await client.send_massege(message.chat.id, f"here your limk..! \n {link}")
+    await Client.send_massage(chat_id=message.chat.id, text=f"here your limk..! \n {link}")
+    # await Client.send_massage(message.chat.id, f"here your limk..! \n {link}")
     Slink = await get_short(SL_URL, SL_API, Tlink) #generating short link with particular domine and api
     await bot_msg.edit("Analysing....!")
     await asyncio.sleep(1)
