@@ -43,7 +43,7 @@ async def channel_post(client: Client, message: Message):
             chtid=message.chat.id # if you want pic+formet into bot pm     
             bot_msg = await message.reply_text("Please Wait...!", quote = True) #reply text please wait... to bot
             await asyncio.sleep(1)
-        elif media.file_name == media.file_name:
+        elif media.file_name = media.file_name:
             link = await conv_link(client , message)
             await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
             await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
@@ -53,7 +53,7 @@ async def channel_post(client: Client, message: Message):
             
     elif int(DATEDAY[-1][0:2]) % 2 == 0: #checking for EVEN
         if filname in media.file_name:
-            i# chtid=int(DATAODD[filname][3])#for particular channel id
+            # chtid=int(DATAODD[filname][3])#for particular channel id
             pic=DATAODD[filname][0] #particuler images
             SL_URL=DATAODD[filname][1] #for particuler domine name
             SL_API=DATAODD[filname][2] #for particuler api 
