@@ -62,7 +62,7 @@ async def channel_post(client: Client, message: Message):
          reply_text = await message.reply_text("❌Don't send me messages directly I'm only for serials!")
         
     Tlink = await conv_link(message)
-    # await client.send_message(chat_id=chtid, text=f"link:-\n{Tlink}")
+    await client.send_message(chat_id=chtid, text=f"link:-\n{Tlink}")
     Slink = await get_short(SL_URL, SL_API, Tlink) #generating short link with particular domine and api
     await bot_msg.edit("Analysing....!")
     await asyncio.sleep(1)
