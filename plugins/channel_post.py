@@ -45,6 +45,7 @@ async def channel_post(client: Client, message: Message):
             await asyncio.sleep(1)
         elif media.file_name == media.file_name:
             link = await conv_link(client , message)
+            await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
         else:
             await message.reply_text("Somthing went wrong 😕")
             # await client.send_massage(message.chat.id , "Somthing went wrong 😕")
@@ -60,6 +61,7 @@ async def channel_post(client: Client, message: Message):
             await asyncio.sleep(1)
         elif media.file_name == media.file_name:
             link = await conv_link(client , message)
+            await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
         else:
             await message.reply_text("Somthing went wrong 😕")
             # await client.send_massage(message.chat.id , "Somthing went wrong 😕")
@@ -95,9 +97,6 @@ async def get_info(filname, message):
     await asyncio.sleep(1)
     return pic, SL_URL, SL_API, chtid, bot_msg
 
-@Client.on_message(filters.private & filters.user(ADMINS) & filters.command(["genlink"]))
-Client=client
-Message=message
 async def conv_link(client , message):
     try:
        post_message = await message.copy(chat_id = CHANNEL_ID, disable_notification=True)
@@ -111,7 +110,7 @@ async def conv_link(client , message):
     string = f"get-{converted_id}"
     base64_string = await encode(string)
     link = f"https://telegram.me/{client.username}?start={base64_string}"
-    await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
+    # await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
     return link
 
 async def get_short(SL_URL, SL_API, Tlink): #A simple func for shorting link
