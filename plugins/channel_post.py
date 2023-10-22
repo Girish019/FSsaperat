@@ -28,12 +28,7 @@ async def channel_post(client: Client, message: Message):
     media = message.video or message.document
     filname= media.file_name.split("S0")[0]#[1][2]etc
     botfsno= re.findall("S0.+E\d+\d", media.file_name)
-    if filname not in media.file_name:
-            link = await conv_link(client , message)
-            await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
-            await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
-    else:
-        pass             
+    
     if len(DATEDAY)==0:
         await client.send_message(chat_id=message.chat.id, text="Error: invalid date please set /date")
         date(bot, message)
@@ -47,7 +42,11 @@ async def channel_post(client: Client, message: Message):
             SL_API=DATAODD[filname][2] #for particuler api 
             chtid=message.chat.id # if you want pic+formet into bot pm     
             bot_msg = await message.reply_text("Please Wait...!", quote = True) #reply text please wait... to bot
-            await asyncio.sleep(1)       
+            await asyncio.sleep(1)  
+        elif media.file_name == media.file_name:
+            link = await conv_link(client , message)
+            await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
+            await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
         else:
             await message.reply_text("Somthing went wrong 😕")
             # await client.send_massage(message.chat.id , "Somthing went wrong 😕")
@@ -61,6 +60,10 @@ async def channel_post(client: Client, message: Message):
             chtid=message.chat.id # if you want pic+formet into bot pm
             bot_msg = await message.reply_text("Please Wait...!", quote = True) #reply text please wait... to bot
             await asyncio.sleep(1)
+        elif media.file_name == media.file_name:
+            link = await conv_link(client , message)
+            await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
+            await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
         else:
             await message.reply_text("Somthing went wrong 😕")
             # await client.send_massage(message.chat.id , "Somthing went wrong 😕")
