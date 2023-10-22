@@ -25,10 +25,15 @@ async def date(bot, message):
 
 @Client.on_message(filters.private & filters.user(ADMINS) & ~filters.text)
 async def channel_post(client: Client, message: Message):
-    #dateexc = datetime.now().strftime("%d")
     media = message.video or message.document
     filname= media.file_name.split("S0")[0]#[1][2]etc
-    botfsno= re.findall("S0.+E\d+\d", media.file_name)                   
+    botfsno= re.findall("S0.+E\d+\d", media.file_name)
+    if filname not in media.file_name:
+            link = await conv_link(client , message)
+            await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
+            await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
+    else:
+        pass             
     if len(DATEDAY)==0:
         await client.send_message(chat_id=message.chat.id, text="Error: invalid date please set /date")
         date(bot, message)
@@ -43,13 +48,9 @@ async def channel_post(client: Client, message: Message):
             chtid=message.chat.id # if you want pic+formet into bot pm     
             bot_msg = await message.reply_text("Please Wait...!", quote = True) #reply text please wait... to bot
             await asyncio.sleep(1)       
-        elif filname not in media.file_name:
-            link = await conv_link(client , message)
-            await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
-            await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
         else:
             await message.reply_text("Somthing went wrong 😕")
-            await client.send_massage(message.chat.id , "Somthing went wrong 😕")
+            # await client.send_massage(message.chat.id , "Somthing went wrong 😕")
             
     elif int(DATEDAY[-1][0:2]) % 2 == 0: #checking for EVEN
         if filname in media.file_name:
@@ -60,13 +61,9 @@ async def channel_post(client: Client, message: Message):
             chtid=message.chat.id # if you want pic+formet into bot pm
             bot_msg = await message.reply_text("Please Wait...!", quote = True) #reply text please wait... to bot
             await asyncio.sleep(1)
-        elif filname not in media.file_name:
-            link = await conv_link(client , message)
-            await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
-            await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
         else:
             await message.reply_text("Somthing went wrong 😕")
-            await client.send_massage(message.chat.id , "Somthing went wrong 😕")
+            # await client.send_massage(message.chat.id , "Somthing went wrong 😕")
             
     else:
          reply_text = await message.reply_text("❌Don't send me messages directly I'm only for serials!")
