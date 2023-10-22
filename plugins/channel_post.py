@@ -82,15 +82,13 @@ async def channel_post(client: Client, message: Message):
 
 async def conv_link(message):
     try:
-       post_message = await message.copy(chat_id = client.db_channel.id, disable_notification=True)
+       post_message = await message.copy(chat_id = CHANNEL_ID, disable_notification=True)
     except FloodWait as e:
         await asyncio.sleep(e.x)
-        post_message = await message.copy(chat_id = client.db_channel.id, disable_notification=True)
+        post_message = await message.copy(chat_id = CHANNEL_ID, disable_notification=True)
     except Exception as e:
-        print(e)
-        await reply_text.edit_text("Something went Wrong..!")
-            
-    converted_id = post_message.id * abs(client.db_channel.id)
+        print(e) 
+    converted_id = post_message.id * abs(CHANNEL_ID)
     string = f"get-{converted_id}"
     base64_string = await encode(string)
     link = f"https://telegram.me/{client.username}?start={base64_string}"
