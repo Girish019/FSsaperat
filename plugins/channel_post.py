@@ -80,7 +80,7 @@ async def channel_post(client: Client, message: Message):
     await bot_msg.edit(BOTEFITMSG.format(filname, botfsno[0], Tlink, Slink, Size, DATEDAY[-1])) #msg edit to "please wait...(see line 39" msg ==> and finally the elements belongs to sent serials are updated here
     #await e_pic.edit) # msg edit in forwarder channel = "pic without captions (see line 41)" ==> thats return to our given format and short link ,date are updated here
 
-async def conv_link(message):
+async def conv_link(message , client: Client):
     try:
        post_message = await message.copy(chat_id = CHANNEL_ID, disable_notification=True)
     except FloodWait as e:
@@ -88,6 +88,7 @@ async def conv_link(message):
         post_message = await message.copy(chat_id = CHANNEL_ID, disable_notification=True)
     except Exception as e:
         print(e) 
+        await client.send_message(message.chat.id, "Somthing is Wrong")
     converted_id = post_message.id * abs(CHANNEL_ID)
     string = f"get-{converted_id}"
     base64_string = await encode(string)
