@@ -35,7 +35,7 @@ async def channel_post(client: Client, message: Message):
     else:
         pass                
     if int(DATEDAY[-1][0:2]) % 2 != 0:#chaeking for ODD by given date
-        if filname in media.file_name: #matching name in dict key with arrival video file name
+        if filname in DATAODD.keys(): #matching name in dict key with arrival video file name
             # chtid=int(DATAODD[filname][3])#for particular channel id
             pic=DATAODD[filname][0] #particuler images
             SL_URL=DATAODD[filname][1] #for particuler domine name
@@ -43,13 +43,14 @@ async def channel_post(client: Client, message: Message):
             chtid=message.chat.id # if you want pic+formet into bot pm     
             bot_msg = await message.reply_text("Please Wait...!", quote = True) #reply text please wait... to bot
             await asyncio.sleep(1)
-        # elif media.file_name == media.file_name:
-        else:
+        elif filname in media.file_name:
             link = await conv_link(client , message)
             await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
+        else:
+            reply_text = await message.reply_text("❌Somthing went wrong")
 
     elif int(DATEDAY[-1][0:2]) % 2 == 0: #checking for EVEN
-        if filname in media.file_name:
+        if filname in DATAODD.keys():
             # chtid=int(DATAODD[filname][3])#for particular channel id
             pic=DATAODD[filname][0] #particuler images
             SL_URL=DATAODD[filname][1] #for particuler domine name
@@ -57,11 +58,12 @@ async def channel_post(client: Client, message: Message):
             chtid=message.chat.id # if you want pic+formet into bot pm     
             bot_msg = await message.reply_text("Please Wait...!", quote = True) #reply text please wait... to bot
             await asyncio.sleep(1)
-        # elif media.file_name == media.file_name:
-        else:
+        elif filname in media.file_name:
             link = await conv_link(client , message)
             await client.send_massage(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
-    
+        else:
+            reply_text = await message.reply_text("❌Somthing went wrong")
+            
     else:
          reply_text = await message.reply_text("❌Somthing went wrong")
         
