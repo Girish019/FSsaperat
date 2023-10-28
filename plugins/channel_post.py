@@ -45,7 +45,7 @@ async def channel_post(client: Client, message: Message):
             await asyncio.sleep(1)
         elif filname in media.file_name:
             link = await conv_link(client , message)
-            await message.reply_text(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
+            await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
         else:
             reply_text = await message.reply_text("❌Somthing went wrong")
 
@@ -60,7 +60,7 @@ async def channel_post(client: Client, message: Message):
             await asyncio.sleep(1)
         elif filname in media.file_name:
             link = await conv_link(client , message)
-            await message.reply_text(message.chat.id , f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
+            await message.reply_text(f"<b>Here is your link</b>\n\n{link}\n\n<code>{link}</code>", disable_web_page_preview = True)
         else:
             reply_text = await message.reply_text("❌Somthing went wrong")
             
