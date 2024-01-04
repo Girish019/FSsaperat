@@ -28,15 +28,15 @@ from asyncio import sleep
 import os, time
 
 ##################### FOR JIO CENIMA DOWNLOAD ########################
-# import subprocess
-# import jwt
-# import json
-# import requests
-# from requests.packages.urllib3.exceptions import InsecureRequestWarning
-# requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-# from bs4 import BeautifulSoup
-# from selenium import webdriver
-# from selenium.webdriver import ChromeOptions
+import subprocess
+import jwt
+import json
+import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver import ChromeOptions
 
 ##################### FOR WEB SCRAPPING ########################
 # from selenium.webdriver.common.by import By
@@ -79,63 +79,88 @@ def get_accesstoken():
 async def start_command(client: Client, message: Message):
     await message.reply_text("hello buddy ......",quote=True)
         
-@Client.on_message(filters.private & filters.video)
-async def doc(bot, update):
-    file = getattr(update, update.media.value)
-    filename = file.file_name
-    file_path = f"downloads/{file.file_name.split('_')[0]}/{file.file_name.split('.')[0]}.mp4"
-    logger.info(file_path)
-    output_folder = f"downloads/{file.file_name.split('_')[0]}/Parts"
-    logger.info(f"folder :-{output_folder} ")
-    video_length = file.file_size
-    logger.info(f"vidlenght :-{video_length} ")
-    parts = 2
-    if file.file_size > 2000 * 1024 * 1024:
-         return await update.reply_text("Sᴏʀʀy Bʀᴏ Tʜɪꜱ Bᴏᴛ Iꜱ Dᴏᴇꜱɴ'ᴛ Sᴜᴩᴩᴏʀᴛ Uᴩʟᴏᴀᴅɪɴɢ Fɪʟᴇꜱ Bɪɢɢᴇʀ Tʜᴀɴ 2Gʙ")
+@Bot.on_message(filters.command('token') & filters.private )
+async def start_command(client: Client, message: Message):
+    
+    IdURL = "https://cs-jv.voot.com/clickstream/v1/get-id"
+    GuestURL = "https://auth-jiocinema.voot.com/tokenservice/apis/v4/guest"
+    id = requests.get(url=IdURL).json()['id']
+    token = requests.post(url=GuestURL, json={
+            'adId': id,
+            "appName": "RJIL_JioCinema",
+            "appVersion": "23.10.13.0-841c2bc7",
+            "deviceId": id,
+            "deviceTawait imog.edit(text=response2)ype": "web",
+            "freshLaunch": True,
+            "os": "ios"
+        }, headers={
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
+        }).json()
 
-    ms =   await update.reply_text(text=f"Tʀyɪɴɢ Tᴏ Dᴏᴡɴʟᴏᴀᴅɪɴɢ....") 
-    
-    try:
-       logger.info('starting download')
-       path = await bot.download_media(message=update, file_name=file_path, progress=progress_for_pyrogram,progress_args=("Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time())) 
-       #path = await bot.download_media(message=update, file_name=file_path) 
-    except Exception as e:
-     	return await ms.edit(e)
-    logger.info('download complete')	     
-    duration = 0
-    await ms.edit(text="DL complete")
-    
-    ffmpeg = "ffmpeg/fffmpeg.exe"
-    if os.path.isfile(file_path):
-        logger.info("no issues")
-        await ms.edit(text="starting to split")
-        parts = 4
-        duration_per_part = video_length / parts
-        acodec="copy"
-        vcodec="copy"
-        extra=""
-        try:
-            for i in range(parts):
-                logger.info("split start")
-                start_time = i * duration_per_part
-                logger.info(f"start_time :- {start_time}")
-                output_file = os.path.join(output_folder, f"{file.file_name.split('_')[0]}_part_{i+1:02d}.mp4")
-                logger.info(f"output_file dire :-{output_file} ")
-                split_cmd = ["ffmpeg", "-i", file_path, "-vcodec", "copy","-acodec", "copy", "-y"] + shlex.split(extra)
-                split_args += ["-ss", str(start_time), "-t", str(duration_per_part), output_file]
-                subprocess.check_output(split_cmd + split_args)
-                
-                #command_to_exec = ["ffmpeg", "-i", file_path, "-ss", start_time, "-t", duration_per_part, "-c copy", output_file]
-                #process = await asyncio.create_subprocess_exec(*command_to_exec, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
-                #logger.info("split start2....")
-                #stdout, stderr = await process.communicate()
-                #logger.info("split start3......")
-                #e_response = stderr.decode().strip()
-                #t_response = stdout.decode().strip()
-        except:
-            await ms.edit(text="somthing went wrong")
-    else:
-        logger.info("issues found, passing to sub process")
-        await ms.edit(text="process excuted somthing wrong")
-           
+    tkn = token
+    bot_msg = await message.reply_text(tkn, quote = True)
+
+
+@Client.on_message(filters.private & filters.regex(pattern=".*http.*"))
+async def echo(bot, update):
+        imog = await update.reply_text("<b>Processing... ⏳</b>",)
+        link = update.text
+        link_id = re.findall(r'.*/(.*)', link)[0].strip()
+        access_token = get_accesstoken()[0]
+        header_data = jwt.get_unverified_header(access_token)
+        decoded = jwt.decode(access_token, algorithms=["HS512", "HS256"], options={"verify_signature": False})
+        deviceId = decoded['data']['deviceId']
+        uniqueid = decoded['data']['userId']
+        appName = decoded['data']['appName']
+        await update.reply_text(f"{decoded}\n\n{header_data}\n\n{deviceId}\n{uniqueid}\n{appName}")
+        headers2 = {
+            'authority': 'apis-jiovoot.voot.com',
+            'accept': 'application/json, text/plain, */*',
+            'accesstoken': access_token,
+            'appname': "RJIL_JioCinema",
+            'content-type': 'application/json',
+            'deviceid': get_accesstoken()[1],
+            'origin': 'https://www.jiocinema.com',
+            'referer': 'https://www.jiocinema.com/',
+            'uniqueid': uniqueid,
+            'user-agent': 'Mozilla/5.0 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'versioncode': '2312070',
+            'x-platform': 'androidweb',
+            'x-platform-token': 'web',
+        }
+
+        json_data2 = {
+            '4k': False,
+            'ageGroup': '18+',
+            'appVersion': '3.4.0',
+            'bitrateProfile': 'xhdpi',
+            'capability': {
+                'drmCapability': {
+                    'aesSupport': 'yes',
+                    'fairPlayDrmSupport': 'yes',
+                    'playreadyDrmSupport': 'none',
+                    'widevineDRMSupport': 'yes',
+                },
+                'frameRateCapability': [
+                    {
+                        'frameRateSupport': '30fps',
+                        'videoQuality': '1440p',
+                    },
+                ],
+            },
+            'continueWatchingRequired': True,
+            'dolby': False,
+            'downloadRequest': False,
+            'hevc': False,
+            'kidsSafe': False,
+            'manufacturer': 'Windows',
+            'model': 'Windows',
+            'multiAudioRequired': True,
+            'osVersion': '10',
+            'parentalPinValid': True,
+        }
+
+        response2 = requests.post('https://apis-jiovoot.voot.com/playbackjv/v4/'+link_id+'', headers=headers2, json=json_data2, verify=False).json()
+        contentType = response2
+        await imog.edit(text=response2)
 
