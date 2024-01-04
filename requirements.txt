@@ -19,6 +19,7 @@ pyperclip
 # --- for-file-split --------- #
 #pyrogram==2.0.35
 #TgCrypto==1.2.5 
+subprocess
 ffmpeg-python
 ffprobe
 motor==3.1.2
