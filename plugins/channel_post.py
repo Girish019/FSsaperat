@@ -34,11 +34,11 @@ import json
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver import ChromeOptions
 
 ##################### FOR WEB SCRAPPING ########################
+# from bs4 import BeautifulSoup
+# from selenium import webdriver
+# from selenium.webdriver import ChromeOptions
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.support.ui import WebDriverWait
 # from selenium.webdriver.support import expected_conditions as EC
