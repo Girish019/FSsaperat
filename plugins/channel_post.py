@@ -86,16 +86,16 @@ async def start_command(client: Client, message: Message):
     GuestURL = "https://auth-jiocinema.voot.com/tokenservice/apis/v4/guest"
     id = requests.get(url=IdURL).json()['id']
     token = requests.post(url=GuestURL, json={
-            'adId': id,
-            "appName": "RJIL_JioCinema",
-            "appVersion": "23.10.13.0-841c2bc7",
-            "deviceId": id,
-            "deviceTawait imog.edit(text=response2)ype": "web",
-            "freshLaunch": True,
-            "os": "ios"
-        }, headers={
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
-        }).json()
+                                              'adId': id,
+                                              "appName": "RJIL_JioCinema",
+                                              "appVersion": "23.10.13.0-841c2bc7",
+                                              "deviceId": id,
+                                              "deviceTawait imog.edit(text=response2)ype": "web",
+                                              "freshLaunch": True,
+                                              "os": "ios"
+                                          }, headers={
+                                              "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
+                                          }).json()
 
     tkn = token
     bot_msg = await message.reply_text(tkn, quote = True)
@@ -106,13 +106,15 @@ async def echo(bot, update):
         imog = await update.reply_text("<b>Processing... ⏳</b>",)
         link = update.text
         link_id = re.findall(r'.*/(.*)', link)[0].strip()
+        h = await update.reply_text(f"getting token")
         access_token = get_accesstoken()[0]
+        await h.edit(text="token recived")
         header_data = jwt.get_unverified_header(access_token)
         decoded = jwt.decode(access_token, algorithms=["HS512", "HS256"], options={"verify_signature": False})
         deviceId = decoded['data']['deviceId']
         uniqueid = decoded['data']['userId']
         appName = decoded['data']['appName']
-        await update.reply_text(f"{decoded}\n\n{header_data}\n\n{deviceId}\n{uniqueid}\n{appName}")
+        await h.edit(text=f"{decoded}\n\n{header_data}\n\n{deviceId}\n{uniqueid}\n{appName}")
         headers2 = {
             'authority': 'apis-jiovoot.voot.com',
             'accept': 'application/json, text/plain, */*',
@@ -159,7 +161,7 @@ async def echo(bot, update):
             'osVersion': '10',
             'parentalPinValid': True,
         }
-
+        await update.reply_text("requsting DATA",)
         response2 = requests.post('https://apis-jiovoot.voot.com/playbackjv/v4/'+link_id+'', headers=headers2, json=json_data2, verify=False).json()
         contentType = response2
         await imog.edit(text=response2)
