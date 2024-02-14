@@ -2,26 +2,28 @@
 pyrogram
 TgCrypto
 pyromod==1.5
+
 # --- For-Database ------------ #
 pymongo
 dnspython
+
 # --- For-Web-Response ------- #
 pytz
 aiohttp
 requests
-pyshorteners
+
 # --- for-jio-cinema --------- #
 xmltodict
-requests
 pyjwt
 protobuf==3.20.
 pyperclip
+
 # --- for-file-split --------- #
 #pyrogram==2.0.35
 #TgCrypto==1.2.5 
-ffmpeg-python
-ffprobe
-motor==3.1.2
-hachoir==3.2.0
-Pillow==9.5.0 
-pytz==2023.3
+#ffmpeg-python
+#ffprobe
+#motor==3.1.2
+#hachoir==3.2.0
+#Pillow==9.5.0 
+#pytz==2023.3
